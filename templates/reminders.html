@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hatırlatıcılar</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+    <h1>Hatırlatıcılar</h1>
+    <p><a href="/dashboard">Ana Sayfa</a> | <a href="/health">Sağlık Bilgileri</a> | <a href="/medications">İlaçlarım</a> | <a href="/profile">Profil</a> | <a href="/logout">Çıkış Yap</a></p>
+
+    <h2>Yeni Hatırlatıcı Ekle</h2>
+    <form method="POST" action="/add_reminder">
+        <div>
+            <label for="title">Başlık:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="description">Açıklama:</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+        <div>
+            <label for="reminder_time">Zaman (YYYY-MM-DD HH:MM):</label>
+            <input type="text" id="reminder_time" name="reminder_time" value="{{ now_plus_hour }}">
+        </div>
+        <div>
+            <label for="repeat_interval">Tekrar:</label>
+            <select id="repeat_interval" name="repeat_interval">
+                <option value="yok">Yok</option>
+                <option value="günlük">Günlük</option>
+                <option value="haftalık">Haftalık</option>
+            </select>
+        </div>
+        <button type="submit">Ekle</button>
+    </form>
+
+    <h2>Hatırlatıcı Listesi</h2>
+    {% if reminders %}
+    <table>
+        <thead>
+            <tr>
+                <th>Başlık</th>
+                <th>Açıklama</th>
+                <th>Zaman</th>
+                <th>Tekrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reminder in reminders %}
+            <tr>
+                <td>{{ reminder.title }}</td>
+                <td>{{ reminder.description or '-' }}</td>
+                <td>{{ reminder.reminder_time }}</td>
+                <td>{{ reminder.repeat_interval or '-' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Henüz hatırlatıcı yok.</p>
+    {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>İlaçlarım</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+    <h1>İlaçlarım</h1>
+    <p><a href="/dashboard">Ana Sayfa</a> | <a href="/health">Sağlık Bilgileri</a> | <a href="/reminders">Hatırlatıcılar</a> | <a href="/profile">Profil</a> | <a href="/logout">Çıkış Yap</a></p>
+
+    <h2>Yeni İlaç Ekle</h2>
+    <form method="POST" action="/add_medication">
+        <div>
+            <label for="name">İlaç Adı:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="dosage">Dozaj:</label>
+            <input type="text" id="dosage" name="dosage">
+        </div>
+        <div>
+            <label for="frequency">Sıklık:</label>
+            <input type="text" id="frequency" name="frequency" value="günlük">
+        </div>
+        <div>
+            <label for="start_date">Başlangıç Tarihi (YYYY-MM-DD HH:MM):</label>
+            <input type="text" id="start_date" name="start_date" value="{{ now }}">
+        </div>
+        <div>
+            <label for="end_date">Bitiş Tarihi (YYYY-MM-DD HH:MM):</label>
+            <input type="text" id="end_date" name="end_date" value="{{ thirty_days_later }}">
+        </div>
+        <div>
+            <label for="instructions">Talimatlar:</label>
+            <textarea id="instructions" name="instructions"></textarea>
+        </div>
+        <button type="submit">Ekle</button>
+    </form>
+
+    <h2>İlaç Listesi</h2>
+    {% if medications %}
+    <table>
+        <thead>
+            <tr>
+                <th>İlaç Adı</th>
+                <th>Dozaj</th>
+                <th>Sıklık</th>
+                <th>Başlangıç</th>
+                <th>Bitiş</th>
+                <th>Talimatlar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for medication in medications %}
+            <tr>
+                <td>{{ medication.name }}</td>
+                <td>{{ medication.dosage or '-' }}</td>
+                <td>{{ medication.frequency or '-' }}</td>
+                <td>{{ medication.start_date }}</td>
+                <td>{{ medication.end_date }}</td>
+                <td>{{ medication.instructions or '-' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Henüz kayıtlı ilaç yok.</p>
+    {% endif %}
+    </div>
+</body>
+</html>

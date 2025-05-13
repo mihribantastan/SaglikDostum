@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profil</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+    <h1>Profil</h1>
+    <p><a href="/dashboard">Ana Sayfa</a> | <a href="/health">Sağlık Bilgileri</a> | <a href="/medications">İlaçlarım</a> | <a href="/reminders">Hatırlatıcılar</a> | <a href="/logout">Çıkış Yap</a></p>
+
+    <h2>Kullanıcı Bilgileri</h2>
+    {% if user %}
+    <form method="POST" action="/update_profile">
+        <div>
+            <label for="username">Kullanıcı Adı:</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" readonly>
+            <small>Kullanıcı adı değiştirilemez.</small>
+        </div>
+        <div>
+            <label for="full_name">Tam Ad:</label>
+            <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}">
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}">
+        </div>
+        <div>
+            <label for="phone">Telefon:</label>
+            <input type="tel" id="phone" name="phone" value="{{ user.phone }}">
+        </div>
+        <div>
+            <label for="role">Rol:</label>
+            <input type="text" id="role" name="role" value="{{ user.role }}" readonly>
+            <small>Rol değiştirilemez.</small>
+        </div>
+        <button type="submit">Güncelle</button>
+        {% if message %}
+        <p style="color: green;">{{ message }}</p>
+        {% endif %}
+    </form>
+
+    <h2>Şifre Değiştir</h2>
+    <form method="POST" action="/change_password">
+        <div>
+            <label for="old_password">Eski Şifre:</label>
+            <input type="password" id="old_password" name="old_password">
+        </div>
+        <div>
+            <label for="new_password">Yeni Şifre:</label>
+            <input type="password" id="new_password" name="new_password">
+        </div>
+        <div>
+            <label for="confirm_new_password">Yeni Şifre Tekrar:</label>
+            <input type="password" id="confirm_new_password" name="confirm_new_password">
+        </div>
+        <button type="submit">Şifreyi Değiştir</button>
+        {% if password_error %}
+        <p style="color: red;">{{ password_error }}</p>
+        {% endif %}
+    </form>
+    {% else %}
+    <p>Kullanıcı bilgileri yüklenirken bir hata oluştu.</p>
+    {% endif %}
+    </div>
+</body>
+</html>

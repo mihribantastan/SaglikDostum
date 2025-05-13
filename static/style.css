@@ -1,0 +1,143 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Açık gri arka plan */
+    color: #495057; /* Daha koyu metin rengi */
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+h1, h2 {
+    color: #28a745; /* Yeşil başlık rengi */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 10px;
+}
+
+a {
+    color: #007bff; /* Mavi link rengi */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+form {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #343a40; /* Daha koyu label rengi */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+    width: calc(100% - 16px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+button[type="submit"] {
+    background-color: #28a745; /* Yeşil buton rengi */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #1e7e34;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden; /* Köşeleri yuvarlak göstermek için */
+    border: 1px solid #e9ecef;
+}
+
+th, td {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #343a40;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.error {
+    color: #dc3545; /* Kırmızı hata rengi */
+    margin-top: 8px;
+    font-size: 0.9em;
+}
+
+.message {
+    color: #198754; /* Yeşil başarı mesajı rengi */
+    margin-top: 8px;
+    font-size: 0.9em;
+}
+
+/* Navigasyon Stili */
+.navigation {
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.navigation a {
+    margin-right: 15px;
+    color: #495057;
+    font-weight: bold;
+}
+
+.navigation a:hover {
+    color: #28a745;
+    text-decoration: none;
+}
