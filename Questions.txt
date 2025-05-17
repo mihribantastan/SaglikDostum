@@ -1,0 +1,115 @@
+## Bu kısımda chatbot kısmında kullanılabilecek sorular yer almaktadır
+
+# UYGULAMA BİLGİSİ (app_info)
+- bu uygulama ne işe yarar
+- uygulamayı nasıl kullanırım
+- neler yapabilirim
+- özellikler nelerdir
+- yardım
+- uygulama hakkında bilgi
+
+# PROFİL BİLGİSİ (profile_info)
+- profilim
+- bilgilerim
+- adım ne
+- ismim ne
+- emailim nedir
+- telefonum nedir
+- kullanıcı adım
+- profilimi göster
+- kişisel bilgilerim
+- ben kimim
+
+# SAĞLIK ÖLÇÜMÜ EKLEME (health_measure)
+- nasıl ölçüm yapabilirim
+- ölçüm nasıl eklerim
+- sağlık verisi nasıl kaydederim
+- kan basıncı nasıl eklerim
+- tansiyonumu nasıl kaydederim
+
+# İLAÇ EKLEME (medication_add)
+- ilaç nasıl eklerim
+- yeni ilaç kaydet
+- kullandığım ilacı nasıl eklerim
+- ilaç ekleme nasıl yapılır
+
+# HATIRLATICI EKLEME (reminder_add)
+- hatırlatıcı nasıl eklerim
+- yeni hatırlatıcı oluştur
+- alarm nasıl kurarım
+- hatırlatma nasıl ayarlarım
+
+# ÖRNEK SORULAR (example_questions)
+- örnek sorular
+- neyi sorabilirim
+- hangi soruları sorabilirim
+- örnek göster
+- neler sorabilirim
+
+# HATIRLATICILAR (reminders)
+- hatırlatıcılarım
+- hatırlatmalarım
+- alarmlarım
+- yaklaşan hatırlatıcılar
+- planlarım
+
+# İLAÇLAR (medications)
+- ilaçlarım
+- aktif ilaçlarım
+- hangi ilaçları kullanıyorum
+- ilacım var mı
+- kullandığım ilaçlar
+
+# DOĞRUDAN YANITLANANLAR
+
+## Son Ölçümler
+- son sağlık ölçümüm ne
+- en son ölçümüm
+- son sağlık değerim
+- en son kaydım
+- son ölçüm
+
+## Hatırlatıcı Silme
+- hatırlatıcı sil
+- hatırlatıcıyı sil
+- hatırlatıcı kaldır
+- hatırlatıcımı sil
+
+## Motivasyon
+- motivasyon
+- beni motive et
+- cesaret ver
+- motive edici bir şey söyle
+
+## Selamlaşma
+- merhaba
+- selam
+- günaydın
+- iyi akşamlar
+- iyi geceler
+- hey
+- selamlar
+
+## Teşekkür
+- teşekkür
+- sağ ol
+- eyvallah
+- minnettarım
+- teşekkür ederim
+- çok teşekkür
+
+## Veda
+- görüşürüz
+- hoşça kal
+- bye
+- çıkış yap
+- kendine iyi bak
+- güle güle
+
+## Kişisel Sorular
+- ben kimim
+- kimim
+- adım ne
+- verilerim
+- bilgilerim
+- saat

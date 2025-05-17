@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Yaşlı Takip Uygulaması{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/dashboard" class="navbar-logo">Sağlık Dostum</a>
+            <ul class="navbar-menu">
+                <li><a href="/dashboard">Ana Sayfa</a></li>
+                <li><a href="/health">Sağlık Bilgileri</a></li>
+                <li><a href="/medications">İlaçlarım</a></li>
+                <li><a href="/reminders">Hatırlatıcılar</a></li>
+                <li><a href="/chatbot">Sohbet Botu</a></li>
+                <li><a href="/profile">Profil</a></li>
+                <li><a href="/logout" class="logout">Çıkış Yap</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}Sohbet Botu{% endblock %}
+
+{% block content %}
+<style>
+    .chatbot-container {
+        max-width: 500px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        display: flex;
+        flex-direction: column;
+        min-height: 500px;
+    }
+    .chatbot-header {
+        background: #1976d2;
+        color: #fff;
+        padding: 18px 24px;
+        border-radius: 12px 12px 0 0;
+        font-size: 1.3em;
+        font-weight: 600;
+        letter-spacing: .5px;
+    }
+    .chatbot-messages {
+        flex: 1;
+        padding: 18px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: #f6f8fa;
+    }
+    .chatbot-message {
+        max-width: 80%;
+        padding: 10px 18px;
+        border-radius: 20px;
+        font-size: 1em;
+        word-break: break-word;
+        display: inline-block;
+        position: relative;
+        margin-bottom: 2px;
+    }
+    .chatbot-message.user {
+        align-self: flex-end;
+        background: #e3f2fd;
+        color: #055160;
+        border-bottom-right-radius: 4px;
+    }
+    .chatbot-message.bot {
+        align-self: flex-start;
+        background: #fff;
+        color: #222;
+        border-bottom-left-radius: 4px;
+        border: 1px solid #e6e6e6;
+    }
+    .chatbot-footer {
+        padding: 14px 14px 10px 14px;
+        background: #fff;
+        border-radius: 0 0 12px 12px;
+        display: flex;
+        gap: 8px;
+        border-top: 1px solid #ececec;
+    }
+    .chatbot-input {
+        flex: 1;
+        padding: 10px 16px;
+        border-radius: 20px;
+        border: 1px solid #bdbdbd;
+        outline: none;
+        font-size: 1em;
+        background: #f6f8fa;
+    }
+    .chatbot-send-btn {
+        background: #1976d2;
+        border: none;
+        color: #fff;
+        font-weight: 500;
+        border-radius: 20px;
+        padding: 10px 22px;
+        cursor: pointer;
+        transition: background .2s;
+    }
+    .chatbot-send-btn:hover {
+        background: #1565c0;
+    }
+    .chatbot-sample-questions {
+        background: #e3f2fd;
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin-bottom: 14px;
+        font-size: 0.98em;
+        color: #1976d2;
+    }
+    .chatbot-sample-btn {
+        background: #1976d2;
+        color: #fff;
+        border: none;
+        border-radius: 16px;
+        padding: 6px 15px;
+        font-size: 0.98em;
+        margin: 3px 4px 3px 0;
+        cursor: pointer;
+        transition: background .2s;
+        display: inline-block;
+    }
+    .chatbot-sample-btn:hover {
+        background: #1565c0;
+    }
+    @media (max-width: 600px) {
+        .chatbot-container {
+            max-width: 99vw;
+            min-height: 80vh;
+        }
+    }
+</style>
+<div class="chatbot-container">
+    <div class="chatbot-header">
+        <span>Sağlık Dostum - Sohbet Botu 🤖</span>
+    </div>
+    <div id="chatbot-messages" class="chatbot-messages">
+        <div class="chatbot-message bot">
+            Merhaba! Size nasıl yardımcı olabilirim? <br>
+            <div class="chatbot-sample-questions">
+                <b>Örnek sorular:</b><br>
+                <button type="button" class="chatbot-sample-btn">son sağlık ölçümüm ne</button>
+                <button type="button" class="chatbot-sample-btn">yaklaşan hatırlatıcılar</button>
+                <button type="button" class="chatbot-sample-btn">ilaçlarım</button>
+                <button type="button" class="chatbot-sample-btn">profilimi göster</button>
+                <button type="button" class="chatbot-sample-btn">bu uygulama ne işe yarar</button>
+                <button type="button" class="chatbot-sample-btn">yardım</button>
+            </div>
+        </div>
+    </div>
+    <form id="chatbot-form" class="chatbot-footer" autocomplete="off" onsubmit="sendMessage(event)">
+        <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Mesajınızı yazın..." autofocus autocomplete="off">
+        <button type="submit" class="chatbot-send-btn">Gönder</button>
+    </form>
+</div>
+<script>
+const chatMessages = document.getElementById('chatbot-messages');
+const chatInput = document.getElementById('chatbot-input');
+
+function addMessage(text, sender="bot") {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'chatbot-message ' + sender;
+    msgDiv.innerHTML = text.replace(/\n/g, "<br>");
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function sendMessage(e) {
+    if (e) e.preventDefault();
+    const msg = chatInput.value.trim();
+    if(!msg) return;
+    addMessage(msg, "user");
+    chatInput.value = "";
+    fetch("/chatbot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg })
+    })
+    .then(r => r.json())
+    .then(data => {
+        addMessage(data.response, "bot");
+    })
+    .catch(() => {
+        addMessage("Bir hata oluştu, lütfen tekrar deneyin.", "bot");
+    });
+}
+
+chatInput.addEventListener('keydown', function(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+        sendMessage(e);
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.chatbot-sample-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            chatInput.value = btn.textContent;
+            sendMessage(); 
+        });
+    });
+});
+</script>
+{% endblock %}

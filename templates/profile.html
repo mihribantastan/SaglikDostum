@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Profil{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Profil</h1>
+</div>
+
+<div class="dashboard-card" style="margin-bottom:30px;">
+    <h2>Kullanıcı Bilgileri</h2>
+    {% if user %}
+    <form method="POST" action="/update_profile">
+        <div>
+            <label for="username">Kullanıcı Adı:</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" readonly>
+            <small style="color: #888;">Kullanıcı adı değiştirilemez.</small>
+        </div>
+        <div>
+            <label for="full_name">Tam Ad:</label>
+            <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}">
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}">
+        </div>
+        <div>
+            <label for="phone">Telefon:</label>
+            <input type="tel" id="phone" name="phone" value="{{ user.phone }}">
+        </div>
+        <div>
+            <label for="role">Rol:</label>
+            <input type="text" id="role" name="role" value="{{ user.role }}" readonly>
+            <small style="color: #888;">Rol değiştirilemez.</small>
+        </div>
+        <button type="submit" class="btn">Güncelle</button>
+        {% if message %}
+        <p class="message">{{ message }}</p>
+        {% endif %}
+    </form>
+    {% endif %}
+</div>
+
+<div class="dashboard-card">
+    <h2>Şifre Değiştir</h2>
+    <form method="POST" action="/change_password">
+        <div>
+            <label for="old_password">Eski Şifre:</label>
+            <input type="password" id="old_password" name="old_password">
+        </div>
+        <div>
+            <label for="new_password">Yeni Şifre:</label>
+            <input type="password" id="new_password" name="new_password">
+        </div>
+        <div>
+            <label for="confirm_new_password">Yeni Şifre Tekrar:</label>
+            <input type="password" id="confirm_new_password" name="confirm_new_password">
+        </div>
+        <button type="submit" class="btn">Şifreyi Değiştir</button>
+        {% if password_error %}
+        <p class="error">{{ password_error }}</p>
+        {% endif %}
+    </form>
+    {% if not user %}
+    <p>Kullanıcı bilgileri yüklenirken bir hata oluştu.</p>
+    {% endif %}
+</div>
+
+<script>
+let shownReminders = [];
+
+function checkReminders() {
+    fetch('/api/reminders_due')
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.reminders) {
+          data.reminders.forEach(function(rem) {
+            if (shownReminders.indexOf(rem.id) === -1) {
+              alert("Hatırlatıcı zamanı geldi: " + rem.title);
+              shownReminders.push(rem.id);
+
+              if (rem.repeat_interval === "yok") {
+                fetch('/api/reminders_due', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ reminder_id: rem.id })
+                });
+              }
+            }
+          });
+        }
+      });
+}
+setInterval(checkReminders, 60000);
+checkReminders();
+</script>
+{% endblock %}

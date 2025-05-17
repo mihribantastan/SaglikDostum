@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Giriş Yap</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+    <h2>Giriş Yap</h2>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="POST" action="/login">
+        <div>
+            <label for="username">Kullanıcı Adı:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Şifre:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Giriş</button>
+    </form>
+    <p>Henüz kayıt olmadınız mı? <a href="/register">Kayıt Ol</a></p>
+    </div>
+</body>
+</html>

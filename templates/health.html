@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Sağlık Bilgileri{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Sağlık Bilgileri</h1>
+</div>
+
+<div class="dashboard-card" style="margin-bottom:30px;">
+    <h2>Yeni Ölçüm Ekle</h2>
+    <form method="POST" action="/add_health">
+        <div>
+            <label for="blood_pressure">Kan Basıncı:</label>
+            <input type="text" id="blood_pressure" name="blood_pressure" placeholder="Örn: 120/80">
+        </div>
+        <div>
+            <label for="heart_rate">Nabız:</label>
+            <input type="number" id="heart_rate" name="heart_rate" placeholder="Örn: 75">
+        </div>
+        <div>
+            <label for="blood_sugar">Kan Şekeri:</label>
+            <input type="number" step="0.1" id="blood_sugar" name="blood_sugar" placeholder="Örn: 95,5">
+        </div>
+        <div>
+            <label for="weight">Kilo:</label>
+            <input type="number" step="0.1" id="weight" name="weight" placeholder="Örn: 72,3">
+        </div>
+        <div>
+            <label for="notes">Notlar:</label>
+            <textarea id="notes" name="notes" placeholder="Ek bilgi..."></textarea>
+        </div>
+        <button type="submit" class="btn">Kaydet</button>
+    </form>
+</div>
+
+<div class="dashboard-card">
+    <h2>Ölçüm Geçmişi</h2>
+    {% if health_history %}
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Tarih</th>
+                    <th>Kan Basıncı</th>
+                    <th>Nabız</th>
+                    <th>Kan Şekeri</th>
+                    <th>Kilo</th>
+                    <th>Notlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in health_history %}
+                <tr>
+                    <td>{{ data.timestamp }}</td>
+                    <td>{{ data.blood_pressure or '-' }}</td>
+                    <td>{{ data.heart_rate or '-' }}</td>
+                    <td>{{ data.blood_sugar or '-' }}</td>
+                    <td>{{ data.weight or '-' }}</td>
+                    <td>{{ data.notes or '-' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>Henüz sağlık ölçümü yok.</p>
+    {% endif %}
+</div>
+
+<script>
+let shownReminders = [];
+
+function checkReminders() {
+    fetch('/api/reminders_due')
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.reminders) {
+          data.reminders.forEach(function(rem) {
+            if (shownReminders.indexOf(rem.id) === -1) {
+              alert("Hatırlatıcı zamanı geldi: " + rem.title);
+              shownReminders.push(rem.id);
+
+              if (rem.repeat_interval === "yok") {
+                fetch('/api/reminders_due', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ reminder_id: rem.id })
+                });
+              }
+            }
+          });
+        }
+      });
+}
+setInterval(checkReminders, 60000);
+checkReminders();
+</script>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Ana Sayfa{% endblock %}
+{% block content %}
+<div class="welcome-box">
+    <h1>Hoş geldiniz, {{ user.full_name }}!</h1>
+</div>
+
+<div class="dashboard-sections">
+    <div class="dashboard-card">
+        <h2>Son Sağlık Ölçümleri</h2>
+        {% if health_data %}
+        <ul>
+            <li><strong>Kan Basıncı:</strong> {{ health_data.blood_pressure or 'N/A' }}</li>
+            <li><strong>Nabız:</strong> {{ health_data.heart_rate or 'N/A' }}</li>
+            <li><strong>Kan Şekeri:</strong> {{ health_data.blood_sugar or 'N/A' }}</li>
+            <li><strong>Kilo:</strong> {{ health_data.weight or 'N/A' }}</li>
+        </ul>
+        {% else %}
+        <p>Henüz sağlık verisi yok.</p>
+        {% endif %}
+        <a class="btn" href="/health">Tüm Sağlık Bilgileri</a>
+    </div>
+
+    <div class="dashboard-card">
+        <h2>Yaklaşan Hatırlatıcılar</h2>
+        {% if reminders %}
+        <ul>
+            {% for reminder in reminders %}
+            <li><strong>{{ reminder.title }}</strong> - {{ reminder.reminder_time }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Yaklaşan hatırlatıcı yok.</p>
+        {% endif %}
+        <a class="btn" href="/reminders">Tüm Hatırlatıcılar</a>
+    </div>
+
+    <div class="dashboard-card">
+        <h2>Aktif İlaçlar</h2>
+        {% if medications %}
+        <ul>
+            {% for medication in medications %}
+            <li><strong>{{ medication.name }}</strong>{% if medication.dosage %} - {{ medication.dosage }}{% endif %}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Aktif ilaç yok.</p>
+        {% endif %}
+        <a class="btn" href="/medications">Tüm İlaçlar</a>
+    </div>
+</div>
+
+<script>
+let shownReminders = [];
+
+function checkReminders() {
+    fetch('/api/reminders_due')
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.reminders) {
+          data.reminders.forEach(function(rem) {
+            if (shownReminders.indexOf(rem.id) === -1) {
+              alert("Hatırlatıcı zamanı geldi: " + rem.title);
+              shownReminders.push(rem.id);
+
+              if (rem.repeat_interval === "yok") {
+                fetch('/api/reminders_due', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ reminder_id: rem.id })
+                });
+              }
+            }
+          });
+        }
+      });
+}
+setInterval(checkReminders, 60000);
+checkReminders();
+</script>
+{% endblock %}

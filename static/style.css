@@ -1,0 +1,142 @@
+body {
+    font-family: 'Segoe UI', 'Roboto', 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #222;
+    line-height: 1.7;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #198754 0%, #28a745 100%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.navbar-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+}
+
+.navbar-logo {
+    color: #fff;
+    font-size: 1.6em;
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.navbar-menu {
+    list-style: none;
+    display: flex;
+    gap: 1.5em;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.navbar-menu li a:hover,
+.navbar-menu li a.active,
+.navbar-menu li a.logout:hover {
+    background: #fff;
+    color: #198754;
+}
+
+.navbar-menu li a.logout {
+    background: #dc3545;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 35px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+}
+
+h1, h2 {
+    color: #198754;
+    margin-bottom: 18px;
+    border-bottom: 2px solid #198754;
+    padding-bottom: 10px;
+}
+
+button[type="submit"], .btn {
+    background-color: #198754;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, box-shadow 0.2s;
+    box-shadow: 0 2px 6px rgba(25, 135, 84, 0.10);
+}
+button[type="submit"]:hover, .btn:hover {
+    background-color: #145c32;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1.5px solid #b5e1c8;
+    border-radius: 5px;
+    font-size: 15px;
+    transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #198754;
+    outline: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.04);
+}
+
+th, td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+th {
+    background-color: #f1fdf7;
+    color: #198754;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.error {
+    color: #dc3545;
+    font-size: 1em;
+}
+.message {
+    color: #198754;
+    font-size: 1em;
+}
