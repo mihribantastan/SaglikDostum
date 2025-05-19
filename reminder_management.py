@@ -1,5 +1,5 @@
 from database import execute_query, fetch_all
-from datetime import datetime
+from datetime import datetime, timezone
 
 def add_reminder(user_id, title, description, reminder_time, repeat_interval):
     query = '''
@@ -8,7 +8,7 @@ def add_reminder(user_id, title, description, reminder_time, repeat_interval):
     '''
     return execute_query(query, (user_id, title, description, reminder_time, repeat_interval))
 
-def get_upcoming_reminders(user_id, now):
+def get_upcoming_reminders(user_id, now_utc):
     query = '''
         SELECT * FROM reminders
         WHERE user_id = ?
@@ -17,7 +17,7 @@ def get_upcoming_reminders(user_id, now):
         ORDER BY reminder_time
         LIMIT 5
     '''
-    return fetch_all(query, (user_id, now,))
+    return fetch_all(query, (user_id, now_utc.strftime("%Y-%m-%d %H:%M:%S"),))
 
 def get_reminders(user_id):
     query = '''
